@@ -1,0 +1,19 @@
+[tool.poetry]
+authors = ["Craig Trim <craigtrim@gmail.com>"]
+description = "OpenSearch Helper for Easy I/O"
+name = "opensearch-helper"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+baseblock = "0.1.4"
+boto3 = "*"
+opensearch-py = "^1.1.0"
+python = "3.8.5"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "*"
+pytest = "*"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
