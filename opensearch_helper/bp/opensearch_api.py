@@ -56,9 +56,9 @@ class OpenSearchAPI(BaseObject):
             verify_certs=True,
             connection_class=RequestsHttpConnection)
 
-    def process(self,
-                d_query: dict,
-                index_name: str) -> tuple:
+    def query(self,
+              d_query: dict,
+              index_name: str) -> tuple:
 
         sw = Stopwatch()
 
