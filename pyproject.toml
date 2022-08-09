@@ -2,10 +2,10 @@
 authors = ["Craig Trim <craigtrim@gmail.com>"]
 description = "OpenSearch Helper for Easy I/O"
 name = "opensearch-helper"
-version = "0.1.1"
+version = "0.1.2"
 
 [tool.poetry.dependencies]
-baseblock = "0.1.5"
+baseblock = "*"
 boto3 = "*"
 opensearch-py = "^1.1.0"
 python = "3.8.5"

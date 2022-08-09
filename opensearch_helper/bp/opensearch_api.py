@@ -67,7 +67,7 @@ class OpenSearchAPI(BaseObject):
             index=index_name
         )
 
-        # GRAFFL-278; Generate an Event Record
+        # COR-80; Generate an Event Record
         d_event = self._generate_event(
             service_name=self.component_name(),
             event_name='generate-about-marv',
