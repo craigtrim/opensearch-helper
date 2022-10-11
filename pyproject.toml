@@ -12,10 +12,10 @@ license = "None"
 name = "opensearch-helper"
 readme = "README.md"
 
-version = "0.1.4"
+version = "0.1.5"
 
 keywords = ["nlp", "nlu", "opensearch", "elasticsearch", "aws", "search"]
-repository = "https://github.com/craigtrim/climate-mdl"
+repository = "https://github.com/craigtrim/opensearch-helper"
 
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -24,7 +24,7 @@ classifiers = [
 ]
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/craigtrim/climate-mdl/issues"
+"Bug Tracker" = "https://github.com/craigtrim/opensearch-helper/issues"
 
 [tool.poetry.dependencies]
 baseblock = "*"
@@ -56,8 +56,6 @@ max_line_length = 500
 show_source = true
 
 [tool.flakeheaven.plugins]
-# F401 (Missing Import)
-# F403 (Unable to Detect Undefined Names)
 "flake8-*" = ["+*"]
 flake8-bandit = ["-*", "+S1??"]
 flake8-docstrings = ["-*"]

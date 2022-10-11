@@ -59,7 +59,6 @@ def query(d_query: MultiMatchQuery,
 
 
 def multimatch_generator(input_text: str,
-                         size: int = 5,
                          *args) -> MultiMatchQuery:
     """ Generate a Multi Match Query
 
@@ -70,19 +69,21 @@ def multimatch_generator(input_text: str,
 
     Args:
         input_text (str): the text to query on
-        size (int, optional): the total results to return. Defaults to 5.
         args: one-or-more fields to query on
 
     Returns:
         dict: the constructed query
     """
 
+    fields = list(args)
+    fields = [x for x in fields if x and len(x)]
+
     return {
-        'size': size,
+        'size': 5,
         'query': {
             'multi_match': {
                 'query': input_text,
-                'fields': args
+                'fields': fields
             }
         }
     }
