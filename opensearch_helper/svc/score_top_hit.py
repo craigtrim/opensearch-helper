@@ -32,7 +32,9 @@ class ScoreTopHit(BaseObject):
                 'type': None
             }
 
+        score = d_top_hit['_score']
+
         return {
-            'score': d_top_hit['score'],
-            'type': find_score_type(d_top_hit['_score']).name
+            'score': score,
+            'type': find_score_type(score).name
         }
