@@ -32,7 +32,7 @@ build:
 
 mypy:
 	poetry run mypy opensearch_helper
-	poetry run stubgen .\opensearch_helper\ -o .
+	poetry run stubgen .\opensearch_helper\ -o stubs
 
 linters:
 # 	20221010; always fails on autopep8 ...

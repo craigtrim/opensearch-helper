@@ -1,5 +1,5 @@
 from baseblock import BaseObject
-from opensearch_helper.dto import ScoreResult as ScoreResult
+from opensearch_helper.dto import ScoreResult as ScoreResult, find_score_type as find_score_type
 
 class ScoreTopHit(BaseObject):
     def __init__(self) -> None: ...
