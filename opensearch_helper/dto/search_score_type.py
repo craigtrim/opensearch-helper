@@ -37,10 +37,11 @@ def find_score_type(score: float) -> SearchScoreType:
     if score < 5:
         return SearchScoreType.LOW
 
-    if score < 7.5:
+    # wrong answer == 8.488908
+    if score < 8.5:
         return SearchScoreType.MEDIUM_LOW
 
-    if score < 10:
+    if score < 11:
         return SearchScoreType.MEDIUM
 
     if score < 14:
