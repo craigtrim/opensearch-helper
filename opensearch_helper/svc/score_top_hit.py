@@ -4,11 +4,7 @@
 """ Score the top OpenSearch Result """
 
 
-from typing import Dict
-from typing import Optional
-
 from baseblock import BaseObject
-
 
 from opensearch_helper.dto import ScoreResult
 from opensearch_helper.dto import find_score_type

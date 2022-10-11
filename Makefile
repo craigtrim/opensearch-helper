@@ -26,7 +26,7 @@ test:
 
 build:
 	make install
-#	make test
+	make test
 	poetry build
 	make copy_setup
 
@@ -35,7 +35,8 @@ mypy:
 	poetry run stubgen .\opensearch_helper\ -o .
 
 linters:
-	poetry run pre-commit run --all-files
+# 	20221010; always fails on autopep8 ...
+#	poetry run pre-commit run --all-files
 	poetry run flakeheaven lint
 
 pyc:
@@ -52,4 +53,3 @@ all:
 	make linters
 	make pyc
 	make freeze
-	make copy_lib

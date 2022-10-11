@@ -26,7 +26,7 @@ def find_score_type(score: float) -> SearchScoreType:
         d_opensearch_result (dict): an OpenSearch result
 
     Returns:
-        SearchScoreType: the proper enum value 
+        SearchScoreType: the proper enum value
     """
     if score is None or type(score) != float:
         return SearchScoreType.UNKNOWN
