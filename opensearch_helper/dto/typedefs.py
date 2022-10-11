@@ -6,7 +6,7 @@
 from typing import Any
 from typing import List
 from typing import Dict
-from typing import Tuple
+from typing import Optional
 from typing import TypedDict
 
 
@@ -27,3 +27,8 @@ class MultiMatchQuery(TypedDict):
 class OpenSearchResult(TypedDict):
     response: Dict[str, Any]
     events: List[Dict[str, Any]]
+
+
+class ScoreResult(TypedDict):
+    score: float
+    type: Optional[str]

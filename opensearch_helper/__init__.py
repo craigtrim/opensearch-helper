@@ -2,9 +2,11 @@ from operator import index
 from .bp import *
 from .bp.opensearch_api import OpenSearchAPI
 from .svc import *
+from .svc.score_top_hit import ScoreTopHit
 from .dmo import *
 from .dto import *
 
+from .dto.typedefs import ScoreResult
 from .dto.typedefs import MultiMatchQuery
 from typing import List
 
@@ -19,6 +21,18 @@ class SingletonApi(object):
 
 
 sapi = SingletonApi()
+
+
+def score_top_hit(d_hits: dict) -> ScoreResult:
+    """ Quantify and Qualify the Score of the Top OpenSearch Result
+
+    Args:
+        d_hits (dict): a dictionary of results
+
+    Returns:
+        ScoreResult: a quantity (score) and qualification (type) of the top result
+    """
+    return ScoreTopHit().process(d_hits)
 
 
 def query(d_query: MultiMatchQuery,
@@ -38,9 +52,9 @@ def query(d_query: MultiMatchQuery,
         index_name=index_name)
 
 
-def generate_multi_match_query(input_text: str,
-                               fields: List[str],
-                               size: int = 5) -> MultiMatchQuery:
+def multimatch_generator(input_text: str,
+                         size: int = 5,
+                         *args) -> MultiMatchQuery:
     """ Generate a Multi Match Query
 
     The multi_match query builds on the match query to allow multi-field queries
@@ -50,8 +64,8 @@ def generate_multi_match_query(input_text: str,
 
     Args:
         input_text (str): the text to query on
-        fields (List[str]): one-or-more fields to query on
         size (int, optional): the total results to return. Defaults to 5.
+        args: one-or-more fields to query on
 
     Returns:
         dict: the constructed query
@@ -62,7 +76,7 @@ def generate_multi_match_query(input_text: str,
         'query': {
             'multi_match': {
                 'query': input_text,
-                'fields': fields
+                'fields': args
             }
         }
     }
