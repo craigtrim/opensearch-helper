@@ -23,7 +23,13 @@ class SingletonApi(object):
 sapi = SingletonApi()
 
 
-def score_top_hit(d_hits: dict) -> ScoreResult:
+def top_hit(d_hits: dict) -> dict:
+    if 'hits' in d_hits:
+        if 'hits' in d_hits['hits']:
+            return d_hits['hits']['hits'][0]
+
+
+def score_top_hit(d_top: dict) -> ScoreResult:
     """ Quantify and Qualify the Score of the Top OpenSearch Result
 
     Args:
@@ -32,7 +38,7 @@ def score_top_hit(d_hits: dict) -> ScoreResult:
     Returns:
         ScoreResult: a quantity (score) and qualification (type) of the top result
     """
-    return ScoreTopHit().process(d_hits)
+    return ScoreTopHit().process(d_top)
 
 
 def query(d_query: MultiMatchQuery,

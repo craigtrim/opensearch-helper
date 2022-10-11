@@ -22,18 +22,10 @@ class ScoreTopHit(BaseObject):
         """
         BaseObject.__init__(self, __name__)
 
-    def _top_hit(self,
-                 d_hits: dict) -> dict:
-        if 'hits' in d_hits:
-            if 'hits' in d_hits['hits']:
-                return d_hits['hits']['hits'][0]
-
     def process(self,
-                d_hits: dict) -> ScoreResult:
+                d_top_hit: dict) -> ScoreResult:
 
-        d_top = self._top_hit(d_hits)
-
-        if not d_top:
+        if not d_top_hit:
 
             return {
                 'score': 0.0,
@@ -41,6 +33,6 @@ class ScoreTopHit(BaseObject):
             }
 
         return {
-            'score': d_top['score'],
-            'type': find_score_type(d_top['_score']).name
+            'score': d_top_hit['score'],
+            'type': find_score_type(d_top_hit['_score']).name
         }
