@@ -13,8 +13,8 @@ class SearchScoreType(Enum):
     HIGH = 5
     MEDIUM_HIGH = 4
     MEDIUM = 3
-    MEDIUM_LOW = 4
-    LOW = 5
+    MEDIUM_LOW = 2
+    LOW = 1
 
     UNKNOWN = 0
 
@@ -38,6 +38,7 @@ def find_score_type(score: float) -> SearchScoreType:
         return SearchScoreType.LOW
 
     # wrong answer == 8.488908
+
     if score < 8.5:
         return SearchScoreType.MEDIUM_LOW
 
