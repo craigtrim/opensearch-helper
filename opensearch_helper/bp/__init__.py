@@ -1,1 +1,2 @@
-from .opensearch_api import OpenSearchAPI
+from .opensearch_aws import OpenSearchAWS
+from .opensearch_dev import OpenSearchDEV

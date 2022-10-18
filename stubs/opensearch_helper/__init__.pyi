@@ -2,13 +2,14 @@ from .bp import *
 from .svc import *
 from .dmo import *
 from .dto import *
-from .bp.opensearch_api import OpenSearchAPI
+from .bp.opensearch_aws import OpenSearchAWS
+from .bp.opensearch_dev import OpenSearchDEV as OpenSearchDEV
 from .dto.typedefs import MultiMatchQuery as MultiMatchQuery, ScoreResult as ScoreResult
 from _typeshed import Incomplete
 from operator import index as index
 
 class SingletonApi:
-    def api(self) -> OpenSearchAPI: ...
+    def api(self) -> OpenSearchAWS: ...
 
 sapi: Incomplete
 

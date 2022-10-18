@@ -1,29 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-""" Invoke the Greetings Classifier Model """
+""" Connect to OpenSearch on AWS """
 
 
 import boto3
 
-from typing import Any
-from typing import Dict
 
 from opensearchpy import OpenSearch
 from opensearchpy import RequestsHttpConnection
 from opensearchpy import AWSV4SignerAuth
 
 from baseblock import EnvIO
-from baseblock import Stopwatch
 from baseblock import CryptoBase
 from baseblock import BaseObject
 from baseblock import ServiceEventGenerator
 
 from opensearch_helper.dto import OpenSearchResult
 from opensearch_helper.dto import MultiMatchQuery
+from opensearch_helper.svc import QueryOpenSearch
 
 
-class OpenSearchAPI(BaseObject):
-    """ Invoke the Greetings Classifier Model """
+class OpenSearchAWS(BaseObject):
+    """ Connect to OpenSearch on AWS """
 
     def __init__(self) -> None:
         """ Change Log
@@ -32,6 +30,11 @@ class OpenSearchAPI(BaseObject):
             5-May-2022
             craigtrim@gmail.com
             *   https://github.com/craigtrim/opensearch-helper/issues/2
+        Updated:
+            18-Oct-2022
+            craigtrim@gmail.com
+            *   renamed from 'opensearch-api' in pursuit of
+                https://github.com/craigtrim/opensearch-helper/issues/3
         """
         BaseObject.__init__(self, __name__)
         self._generate_event = ServiceEventGenerator().process
@@ -55,37 +58,27 @@ class OpenSearchAPI(BaseObject):
         credentials = boto3.Session().get_credentials()
         AWSV4SignerAuth(credentials=credentials, region=region())
 
-        self._client = OpenSearch(
+        client = OpenSearch(
             hosts=[{'host': host(), 'port': 443}],
             http_auth=(username(), password()),
             use_ssl=True,
             verify_certs=True,
             connection_class=RequestsHttpConnection)
 
+        self._query = QueryOpenSearch(client).query
+
     def query(self,
               d_query: MultiMatchQuery,
               index_name: str) -> OpenSearchResult:
+        """ Entry Point to Query Open Search
 
-        sw = Stopwatch()
+        Args:
+            d_query (MultiMatchQuery): a valid OpenSearch document query
+            index_name (str): the index to query
 
-        response = self._client.search(
-            body=d_query,
-            index=index_name
-        )
+        Returns:
+            OpenSearchResult: the result
+        """
 
-        # COR-80; Generate an Event Record
-        d_event = self._generate_event(
-            service_name=self.component_name(),
-            event_name='generate-about-marv',
-            stopwatch=sw,
-            data={
-                'index_name': index_name,
-                'response': response,
-                'd_query': d_query,
-            })
-
-        # return response, d_event
-        return {
-            'response': response,
-            'events': [d_event]
-        }
+        return self._query(d_query=d_query,
+                           index_name=index_name)

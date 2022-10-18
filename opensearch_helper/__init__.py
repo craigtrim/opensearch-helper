@@ -1,6 +1,7 @@
 from operator import index
 from .bp import *
-from .bp.opensearch_api import OpenSearchAPI
+from .bp.opensearch_aws import OpenSearchAWS
+from .bp.opensearch_dev import OpenSearchDEV
 from .svc import *
 from .svc.score_top_hit import ScoreTopHit
 from .dmo import *
@@ -14,9 +15,9 @@ from typing import List
 class SingletonApi(object):
     __api = None
 
-    def api(self) -> OpenSearchAPI:
+    def api(self) -> OpenSearchAWS:
         if not self.__api:
-            self.__api = OpenSearchAPI()
+            self.__api = OpenSearchAWS()
         return self.__api
 
 
