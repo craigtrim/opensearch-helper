@@ -32,3 +32,26 @@ class OpenSearchResult(TypedDict):
 class ScoreResult(TypedDict):
     score: float
     type: Optional[str]
+
+
+class CreateIndexResult(TypedDict):
+    acknowledged: bool
+    shards_acknowledged: bool
+    index: str
+
+
+class AddDocumentShardsResult(TypedDict):
+    total: int
+    successful: int
+    failed: int
+
+
+class AddDocumentResult(TypedDict):
+    _index: str
+    _id: str
+    _version: int
+    result: str
+    forced_refresh: bool
+    _shards: AddDocumentShardsResult
+    _seq_no: int
+    _primary_term: int
