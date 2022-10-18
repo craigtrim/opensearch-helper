@@ -32,7 +32,7 @@ d_query = multimatch_generator("what is the average PH of rainwater?" "question"
 }
 ```
 
-## API Query
+## API Query (AWS)
 **Method Definition**
 ```python
 query(d_query: MultiMatchQuery, index_name: str) -> OpenSearchResult
@@ -73,4 +73,33 @@ score_top_hit(d_hits)
    "score":14.23432,
    "type":"HIGH"
 }
+```
+
+## Local OpenSearch
+From the terminal run
+```shell
+docker-compose up
+```
+
+The following environment variables must exist and be encrypted via `baseblock::Run-Encrypt`
+1. OPENSEARCH_HOST
+3. OPENSEARCH_USERNAME
+4. OPENSEARCH_PASSWORD
+
+Unless these have been modified, the default values can be found here
+https://opensearch.org/docs/latest/opensearch/install/docker/
+
+from a python script import
+```python
+from opensearch_helper import OpenSearchDEV
+```
+
+The following functions are available
+```python
+client = OpenSearchDEV()
+
+client.create_index(...)
+client.delete_index(...)
+client.add(...)
+client.query(...)
 ```

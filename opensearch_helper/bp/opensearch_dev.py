@@ -3,6 +3,8 @@
 """ Connect to a Local Dev Instance of OpenSearch (via docker-compose.yml) """
 
 
+from typing import Any
+from typing import Dict
 from typing import Optional
 
 from opensearchpy import OpenSearch
@@ -54,7 +56,7 @@ class OpenSearchDEV(BaseObject):
 
     def add(self,
             index_name: str,
-            document: dict,
+            document: Dict[str, str],
             document_id: int) -> AddDocumentResult:
         """ Add Document to OpenSearch
 
@@ -74,7 +76,7 @@ class OpenSearchDEV(BaseObject):
         )
 
     def create_index(self,
-                     d_body: dict,
+                     d_body: Dict[str, str],
                      index_name: str) -> Optional[CreateIndexResult]:
         """ Create Index (if not exists)
 
@@ -85,15 +87,15 @@ class OpenSearchDEV(BaseObject):
                     "mappings": {
                         "properties": {
                             "question": {
-                                "type": "text", 
+                                "type": "text",
                                 "analyzer": "english"
                             },
                             "context": {
-                                "type": "text", 
+                                "type": "text",
                                 "analyzer": "english"
                             },
                             "answer": {
-                                "type": "text", 
+                                "type": "text",
                                 "analyzer": "english"
                             },
                             "chapter": {

@@ -1,7 +1,7 @@
 # Full path of the file
 $file = 'setup.py'
 $ProjectName = "opensearch-helper"
-$ProjectVersion = "0.1.6"
+$ProjectVersion = "0.1.9"
 
 # remove the file if it exists
 if (Test-Path -Path $file -PathType Leaf) {

@@ -50,7 +50,7 @@ requires = ["poetry-core>=1.0.0"]
 
 [tool.flakeheaven]
 base = "https://raw.githubusercontent.com/flakeheaven/flakeheaven/main/pyproject.toml"
-exclude = ["__init__.py", "README.md", "setup.py", ".venv", ".git"]
+exclude = ["__init__.py", "README.md", "setup.py", ".venv", ".git", "*.pyc", "*.pyi"]
 format = "grouped"
 max_line_length = 500
 show_source = true
