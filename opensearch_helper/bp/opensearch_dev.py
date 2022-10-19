@@ -39,6 +39,7 @@ class OpenSearchDEV(BaseObject):
         BaseObject.__init__(self, __name__)
         self._generate_event = ServiceEventGenerator().process
 
+        # these values
         client = OpenSearch(
             hosts=[{'host': 'localhost', 'port': 9200}],
             http_auth=('admin', 'admin'))
