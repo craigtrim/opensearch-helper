@@ -23,10 +23,7 @@ from opensearch_helper.svc import QueryOpenSearch
 class OpenSearchDEV(BaseObject):
     """ Connect to a Local Dev Instance of OpenSearch (via docker-compose.yml) """
 
-    def __init__(self,
-                 host: Optional[str],
-                 username: Optional[str],
-                 password: Optional[str]) -> None:
+    def __init__(self) -> None:
         """ Change Log
 
         Created:
@@ -36,33 +33,15 @@ class OpenSearchDEV(BaseObject):
         Updated:
             19-Oct-2022
             craigtrim@gmail.com
-            *   add optional params in purusit of
+            *   simplify dev connectivity in purusit of
                 https://github.com/craigtrim/climate-mdl-builder/issues/1
         """
         BaseObject.__init__(self, __name__)
         self._generate_event = ServiceEventGenerator().process
 
-        def host() -> str:
-            if host:
-                return host
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_HOST')))
-
-        def username() -> str:
-            if username:
-                return username
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_USERNAME')))
-
-        def password() -> str:
-            if password:
-                return password
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_PASSWORD')))
-
         client = OpenSearch(
-            hosts=[{'host': host(), 'port': 9200}],
-            http_auth=(username(), password()))
+            hosts=[{'host': 'localhost', 'port': 9200}],
+            http_auth=('admin', 'admin'))
 
         self._client = client
         self._query = QueryOpenSearch(client).query
