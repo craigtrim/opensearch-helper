@@ -1,4 +1,9 @@
-from operator import index
+# LOGGING Statements must remain first
+import logging
+logging.getLogger('urllib3').setLevel(logging.ERROR)
+logging.getLogger('opensearch').setLevel(logging.ERROR)
+# END Logging Statements
+
 from .bp import *
 from .bp.opensearch_aws import OpenSearchAWS
 from .bp.opensearch_dev import OpenSearchDEV
@@ -9,7 +14,6 @@ from .dto import *
 
 from .dto.typedefs import ScoreResult
 from .dto.typedefs import MultiMatchQuery
-from typing import List
 
 
 class SingletonApi(object):
