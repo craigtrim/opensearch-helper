@@ -49,6 +49,8 @@ def crud():
 
     print(results)
 
+    print(bp.count(index_name))
+
 
 def main():
     from drivers import IntegrationWrapper

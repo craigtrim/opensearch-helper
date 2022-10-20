@@ -119,6 +119,19 @@ class OpenSearchDEV(BaseObject):
         if self._client.indices.exists(index_name):
             self._client.indices.delete(index_name)
 
+    def count(self,
+              index_name: str) -> int:
+        """ Count Document in the Index
+
+        Args:
+            index_name (str): the index to count in
+
+        Returns:
+            int: the total documents
+        """
+        self._client.indices.refresh(index_name)
+        return self._client.count(index=index_name, body={})["count"]
+
     def query(self,
               d_query: MultiMatchQuery,
               index_name: str) -> OpenSearchResult:
