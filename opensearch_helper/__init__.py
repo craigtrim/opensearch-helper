@@ -4,6 +4,8 @@ logging.getLogger('urllib3').setLevel(logging.ERROR)
 logging.getLogger('opensearch').setLevel(logging.ERROR)
 # END Logging Statements
 
+from typing import Optional
+
 from .bp import *
 from .bp.opensearch_aws import OpenSearchAWS
 from .bp.opensearch_dev import OpenSearchDEV
@@ -28,10 +30,11 @@ class SingletonApi(object):
 sapi = SingletonApi()
 
 
-def top_hit(d_hits: dict) -> dict:
+def top_hit(d_hits: dict) -> Optional[dict]:
     if 'hits' in d_hits:
         if 'hits' in d_hits['hits']:
-            return d_hits['hits']['hits'][0]
+            if d_hits['hits']['hits'] and len(d_hits['hits']['hits']):
+                return d_hits['hits']['hits'][0]
 
 
 def score_top_hit(d_top: dict) -> ScoreResult:
