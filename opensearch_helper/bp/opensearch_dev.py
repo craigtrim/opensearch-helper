@@ -40,12 +40,11 @@ class OpenSearchDEV(BaseObject):
         self._generate_event = ServiceEventGenerator().process
 
         # these values
-        client = OpenSearch(
+        self.client = OpenSearch(
             hosts=[{'host': 'localhost', 'port': 9200}],
             http_auth=('admin', 'admin'))
 
-        self._client = client
-        self._query = QueryOpenSearch(client).query
+        self._query = QueryOpenSearch(self.client).query
 
     def add(self,
             index_name: str,
@@ -61,7 +60,7 @@ class OpenSearchDEV(BaseObject):
         Returns:
             AddDocumentResult: the add document result
         """
-        return self._client.index(
+        return self.client.index(
             index=index_name,
             body=document,
             id=document_id,
@@ -105,8 +104,8 @@ class OpenSearchDEV(BaseObject):
         Returns:
             CreateIndexResult: the result
         """
-        if not self._client.indices.exists(index_name):
-            return self._client.indices.create(index_name, body=d_body)
+        if not self.client.indices.exists(index_name):
+            return self.client.indices.create(index_name, body=d_body)
 
     def delete_index(self,
                      index_name: str) -> None:
@@ -116,8 +115,8 @@ class OpenSearchDEV(BaseObject):
             index_name (str): the index to delete
         """
 
-        if self._client.indices.exists(index_name):
-            self._client.indices.delete(index_name)
+        if self.client.indices.exists(index_name):
+            self.client.indices.delete(index_name)
 
     def count(self,
               index_name: str) -> int:
@@ -129,8 +128,8 @@ class OpenSearchDEV(BaseObject):
         Returns:
             int: the total documents
         """
-        self._client.indices.refresh(index_name)
-        return self._client.count(index=index_name, body={})["count"]
+        self.client.indices.refresh(index_name)
+        return self.client.count(index=index_name, body={})["count"]
 
     def query(self,
               d_query: MultiMatchQuery,

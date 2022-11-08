@@ -65,14 +65,14 @@ class OpenSearchAWS(BaseObject):
         credentials = boto3.Session().get_credentials()
         AWSV4SignerAuth(credentials=credentials, region=region())
 
-        self._client = OpenSearch(
+        self.client = OpenSearch(
             hosts=[{'host': host(), 'port': 443}],
             http_auth=(username(), password()),
             use_ssl=True,
             verify_certs=True,
             connection_class=RequestsHttpConnection)
 
-        self._query = QueryOpenSearch(self._client).query
+        self._query = QueryOpenSearch(self.client).query
 
     def query(self,
               d_query: MultiMatchQuery,
@@ -104,7 +104,7 @@ class OpenSearchAWS(BaseObject):
         Returns:
             AddDocumentResult: the add document result
         """
-        return self._client.index(
+        return self.client.index(
             index=index_name,
             body=document,
             id=document_id,
@@ -148,8 +148,8 @@ class OpenSearchAWS(BaseObject):
         Returns:
             CreateIndexResult: the result
         """
-        if not self._client.indices.exists(index_name):
-            return self._client.indices.create(index_name, body=d_body)
+        if not self.client.indices.exists(index_name):
+            return self.client.indices.create(index_name, body=d_body)
 
     def delete_index(self,
                      index_name: str) -> None:
@@ -159,8 +159,8 @@ class OpenSearchAWS(BaseObject):
             index_name (str): the index to delete
         """
 
-        if self._client.indices.exists(index_name):
-            self._client.indices.delete(index_name)
+        if self.client.indices.exists(index_name):
+            self.client.indices.delete(index_name)
 
     def count(self,
               index_name: str) -> int:
@@ -172,5 +172,5 @@ class OpenSearchAWS(BaseObject):
         Returns:
             int: the total documents
         """
-        self._client.indices.refresh(index_name)
-        return self._client.count(index=index_name, body={})["count"]
+        self.client.indices.refresh(index_name)
+        return self.client.count(index=index_name, body={})["count"]

@@ -1,9 +1,11 @@
+from _typeshed import Incomplete
 from baseblock import BaseObject
 from opensearch_helper.dto import AddDocumentResult as AddDocumentResult, CreateIndexResult as CreateIndexResult, MultiMatchQuery as MultiMatchQuery, OpenSearchResult as OpenSearchResult
 from opensearch_helper.svc import QueryOpenSearch as QueryOpenSearch
 from typing import Dict, Optional
 
 class OpenSearchAWS(BaseObject):
+    client: Incomplete
     def __init__(self) -> None: ...
     def query(self, d_query: MultiMatchQuery, index_name: str) -> OpenSearchResult: ...
     def add(self, index_name: str, document: Dict[str, str], document_id: int) -> AddDocumentResult: ...
