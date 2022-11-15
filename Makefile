@@ -33,10 +33,6 @@ build:
 integration:
 	poetry run python drivers/opensearch_dev_driver.py
 
-mypy:
-#	poetry run mypy opensearch_helper
-	poetry run stubgen .\opensearch_helper\ -o stubs
-
 linters:
 	poetry run pre-commit run --all-files
 	poetry run flakeheaven lint
@@ -54,6 +50,5 @@ all:
 #	'docker-compose up'	must be running for this to work
 #	make integration
 	make linters
-	make mypy
 	make pyc
 	make freeze

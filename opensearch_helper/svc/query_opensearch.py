@@ -53,7 +53,7 @@ class QueryOpenSearch(BaseObject):
         # COR-80; Generate an Event Record
         d_event = self._generate_event(
             service_name=self.component_name(),
-            event_name='generate-about-marv',
+            event_name='query-open-search',
             stopwatch=sw,
             data={
                 'index_name': index_name,
