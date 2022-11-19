@@ -47,8 +47,6 @@ freeze:
 
 all:
 	make build
-#	'docker-compose up'	must be running for this to work
-#	make integration
 	make linters
 	make pyc
 	make freeze
