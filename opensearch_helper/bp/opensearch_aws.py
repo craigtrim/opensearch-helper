@@ -55,6 +55,7 @@ class OpenSearchAWS(BaseObject):
         self._query = QueryOpenSearch(self.client).query
         self._generate_event = ServiceEventGenerator().process
 
+    @staticmethod
     def _get_client(client_type: AWSClientType):
         if AWSClientType.HTTP_AUTH == client_type:
             from opensearch_helper.dmo import AWSClientHttpAuth
