@@ -4,6 +4,8 @@
 
 
 import boto3
+
+from json import dumps
 from typing import Dict
 from typing import Optional
 
@@ -21,12 +23,14 @@ from opensearch_helper.dto import MultiMatchQuery
 from opensearch_helper.svc import QueryOpenSearch
 from opensearch_helper.dto import CreateIndexResult
 from opensearch_helper.dto import AddDocumentResult
+from opensearch_helper.dto import AWSClientType
 
 
 class OpenSearchAWS(BaseObject):
     """ Connect to OpenSearch on AWS """
 
-    def __init__(self) -> None:
+    def __init__(self,
+                 client_type: AWSClientType) -> None:
         """ Change Log
 
         Created:
@@ -42,37 +46,25 @@ class OpenSearchAWS(BaseObject):
             8-Nov-2022
             craigtrim@gmail.com
             *   replicate opensearch-dev API
+
+        Args:
+            client_type (AWSClientType): the client type
         """
         BaseObject.__init__(self, __name__)
+        self.client = self._get_client()
+        self._query = QueryOpenSearch(self.client).query
         self._generate_event = ServiceEventGenerator().process
 
-        def host() -> str:
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_HOST')))
+    def _get_client(client_type: AWSClientType):
+        if AWSClientType.HTTP_AUTH == client_type:
+            from opensearch_helper.dmo import AWSClientHttpAuth
+            return AWSClientHttpAuth().client
 
-        def region() -> str:
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_REGION')))
+        if AWSClientType.SERVERLESS == client_type:
+            from opensearch_helper.dmo import AWSClientServerless
+            return AWSClientServerless().client
 
-        def username() -> str:
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_USERNAME')))
-
-        def password() -> str:
-            return str(CryptoBase().decrypt_str(
-                EnvIO.str_or_exception('OPENSEARCH_PASSWORD')))
-
-        credentials = boto3.Session().get_credentials()
-        AWSV4SignerAuth(credentials=credentials, region=region())
-
-        self.client = OpenSearch(
-            hosts=[{'host': host(), 'port': 443}],
-            http_auth=(username(), password()),
-            use_ssl=True,
-            verify_certs=True,
-            connection_class=RequestsHttpConnection)
-
-        self._query = QueryOpenSearch(self.client).query
+        raise NotImplementedError(client_type)
 
     def query(self,
               d_query: MultiMatchQuery,
