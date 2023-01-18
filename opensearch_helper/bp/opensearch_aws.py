@@ -51,7 +51,7 @@ class OpenSearchAWS(BaseObject):
             client_type (AWSClientType): the client type
         """
         BaseObject.__init__(self, __name__)
-        self.client = self._get_client()
+        self.client = self._get_client(client_type)
         self._query = QueryOpenSearch(self.client).query
         self._generate_event = ServiceEventGenerator().process
 

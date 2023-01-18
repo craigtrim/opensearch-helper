@@ -16,7 +16,7 @@ from .dto import *
 
 from .dto.typedefs import ScoreResult
 from .dto.typedefs import MultiMatchQuery
-
+from .dto.aws_client_type import AWSClientType
 
 class SingletonApi(object):
     __api = None
