@@ -30,11 +30,33 @@ class SingletonApi(object):
 sapi = SingletonApi()
 
 
-def top_hit(d_hits: dict) -> Optional[dict]:
+def hits(d_hits: dict) -> Optional[dict]:
+    """ Return all OpenSearch hits
+
+    Args:
+        d_hits (dict): the raw response object
+
+    Returns:
+        Optional[dict]: all the hits
+    """
     if 'hits' in d_hits:
         if 'hits' in d_hits['hits']:
             if d_hits['hits']['hits'] and len(d_hits['hits']['hits']):
-                return d_hits['hits']['hits'][0]
+                return d_hits['hits']['hits']
+
+
+def top_hit(d_hits: dict) -> Optional[dict]:
+    """ Return the top OpenSearch hit
+
+    Args:
+        d_hits (dict): the raw response object
+
+    Returns:
+        Optional[dict]: the top hit
+    """
+    results = hits(d_hits)
+    if results:
+        return results[0]
 
 
 def score_top_hit(d_top: dict) -> ScoreResult:
