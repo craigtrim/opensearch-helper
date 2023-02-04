@@ -52,29 +52,6 @@ from opensearch_helper import query
 query(d_query, index_name='myindex')
 ```
 
-## Score Top Hit
-This method will retrieve the top hit and both quantitatively and qualitatively score the result.
-
-**Method Definition**
-```python
-score_top_hit(d_hits: dict) -> ScoreResult
-```
-
-**Invoke Function**
-```python
-from opensearch_helper import score_top_hit
-
-score_top_hit(d_hits)
-```
-
-**Sample Output**
-```json
-{
-   "score":14.23432,
-   "type":"HIGH"
-}
-```
-
 ## Local OpenSearch
 From the terminal run
 ```shell

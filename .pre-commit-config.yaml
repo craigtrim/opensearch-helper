@@ -7,6 +7,9 @@ repos:
       - id: trailing-whitespace
       - id: check-yaml
       - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: name-tests-test
   # - repo: https://github.com/pre-commit/mirrors-autopep8
   #   rev: "" # Use the sha / tag you want to point at
   #   hooks:

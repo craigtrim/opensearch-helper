@@ -9,6 +9,7 @@ from baseblock import ServiceEventGenerator
 
 from opensearchpy import OpenSearch
 
+from opensearch_helper.dmo import ConfidenceCompute
 from opensearch_helper.dto import OpenSearchResult
 from opensearch_helper.dto import MultiMatchQuery
 
@@ -25,10 +26,16 @@ class QueryOpenSearch(BaseObject):
             craigtrim@gmail.com
             *   refactored out of 'opensearch-api' in pursuit of
                 https://github.com/craigtrim/opensearch-helper/issues/3
+        Updated:
+            4-Feb-2023
+            craigtrim@gmail.com
+            *   compute a confidence for each search result
+                https://github.com/craigtrim/opensearch-helper/issues/5
         """
         BaseObject.__init__(self, __name__)
         self._client = client
         self._generate_event = ServiceEventGenerator().process
+        self._add_confidence = ConfidenceCompute().process  # opensearch-helper/issues/5
 
     def query(self,
               d_query: MultiMatchQuery,
@@ -49,6 +56,8 @@ class QueryOpenSearch(BaseObject):
             body=d_query,
             index=index_name
         )
+
+        response = self._add_confidence(response)
 
         # COR-80; Generate an Event Record
         d_event = self._generate_event(

@@ -10,11 +10,9 @@ from .bp import *
 from .bp.opensearch_aws import OpenSearchAWS
 from .bp.opensearch_dev import OpenSearchDEV
 from .svc import *
-from .svc.score_top_hit import ScoreTopHit
 from .dmo import *
 from .dto import *
 
-from .dto.typedefs import ScoreResult
 from .dto.typedefs import MultiMatchQuery
 from .dto.aws_client_type import AWSClientType
 
@@ -57,18 +55,6 @@ def top_hit(d_hits: dict) -> Optional[dict]:
     results = hits(d_hits)
     if results:
         return results[0]
-
-
-def score_top_hit(d_top: dict) -> ScoreResult:
-    """ Quantify and Qualify the Score of the Top OpenSearch Result
-
-    Args:
-        d_hits (dict): a dictionary of results
-
-    Returns:
-        ScoreResult: a quantity (score) and qualification (type) of the top result
-    """
-    return ScoreTopHit().process(d_top)
 
 
 def query(d_query: MultiMatchQuery,
