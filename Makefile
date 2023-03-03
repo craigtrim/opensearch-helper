@@ -42,6 +42,6 @@ freeze:
 	poetry run python -m pip install --upgrade pip
 
 all:
-	make build
 	make linters
+	make build
 	make freeze
