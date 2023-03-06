@@ -12,7 +12,7 @@ license = "None"
 name = "opensearch-helper"
 readme = "README.md"
 
-version = "0.1.25"
+version = "0.1.26"
 
 keywords = ["nlp", "nlu", "opensearch", "elasticsearch", "aws", "search"]
 repository = "https://github.com/craigtrim/opensearch-helper"
@@ -29,6 +29,8 @@ classifiers = [
 [tool.poetry.dependencies]
 baseblock = "*"
 boto3 = "*"
+fast-sentence-tokenize = "*"
+nltk = "3.8.1"
 opensearch-py = "^2.2.0"
 python = "^3.8.5"
 requests = "*"
