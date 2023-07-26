@@ -3,11 +3,15 @@
 """ Query a Connected instance of OpenSearch """
 
 
+from pprint import pformat
+from typing import Optional
+
 from baseblock import Stopwatch
 from baseblock import BaseObject
 from baseblock import ServiceEventGenerator
 
 from opensearchpy import OpenSearch
+from opensearchpy.exceptions import TransportError
 
 from opensearch_helper.dmo import ConfidenceCompute
 from opensearch_helper.dto import OpenSearchResult
@@ -52,12 +56,25 @@ class QueryOpenSearch(BaseObject):
 
         sw = Stopwatch()
 
-        response = self._client.search(
-            body=d_query,
-            index=index_name
-        )
+        def _query() -> Optional[dict]:
 
-        response = self._add_confidence(response)
+            try:
+
+                return self._client.search(
+                    body=d_query,
+                    index=index_name
+                )
+
+            except TransportError as e:
+                self.logger.error(e)
+                self.logger.error('\n'.join([
+                    f"Query Failure (index = {index_name})",
+                    pformat(d_query)
+                ]))
+
+        response = _query()
+        if response:
+            response = self._add_confidence(response)
 
         # COR-80; Generate an Event Record
         d_event = self._generate_event(

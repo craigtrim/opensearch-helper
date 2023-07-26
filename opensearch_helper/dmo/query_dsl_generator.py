@@ -50,7 +50,7 @@ def progressive_bigram_query(input_text: str,
         This query works best when the user is describing a single concept
 
     Sample:
-        a user query of ("cloud-based core banking platforms") would result in 
+        a user query of ("cloud-based core banking platforms") would result in
         {
             "query":{
                 "bool":{
@@ -162,7 +162,7 @@ def multi_phrase_prefix(terms: List[str],
     """ Match Multiple Phrases (with optional Stemming)
 
     Sample:
-        a user query of ("netflix" AND "video games") would result in 
+        a user query of ("netflix" AND "video games") would result in
         {
             "query": {
                 "bool": {
